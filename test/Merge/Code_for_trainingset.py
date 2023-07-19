@@ -95,7 +95,7 @@ pwmA = setPinConfig(ENA, IN1, IN2)
 pwmB = setPinConfig(ENB, IN3, IN4) #ENB??
 
 # Dataset saving paths
-dataset_path = "C:/Users/ehdwl/Desktop/Trainingset"
+dataset_path = "/home/raspberrypi/dataset"
 os.makedirs(dataset_path, exist_ok=True)
 
 dataset_path_right = os.path.join(dataset_path, "right")
@@ -111,7 +111,7 @@ i = 0
 j = 0
 k = 0
 
-cap = cv2.VideoCapture("C:/Users/ehdwl/Desktop/road_video2.mp4")  # Video file path
+cap = cv2.VideoCapture(0)  # Video file path
 
 carstate = "stop"
 
@@ -159,7 +159,7 @@ while cap.isOpened():
     cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)  # Draw contours on the mask
 
     # Save label information
-    cv2.imshow("original", src)
+    
     cv2.imshow("Result", mask)
 
     if carstate == "right":
