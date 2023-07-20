@@ -1,3 +1,5 @@
+
+print("test")
 import numpy as np
 import cv2
 import os
@@ -28,17 +30,17 @@ while cap.isOpened():
     if k == 27:
         break
     elif k == 82:
-        print("go")
+        print("go forward")
         carstate = "go"
         # motor go
     elif k == 81:
-        print("left")
+        print("go left")
         carstate = "left"
-        # motor left
+        # motor go left
     elif k == 83:
-        print("right")
+        print("go right")
         carstate = "right"
-        # motor right
+        # motor go right
     elif k == 84:
         print("stop")
         carstate = "stop"
