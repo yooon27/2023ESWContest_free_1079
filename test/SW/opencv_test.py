@@ -1,71 +1,76 @@
-
-print("test")
 import numpy as np
 import cv2
 import os
 
-# 데이터셋 저장 경로
+# Dataset storage paths
 dataset_path = "C:/Users/ehdwl/Desktop/Trainingset"
-os.makedirs(dataset_path, exist_ok=True)
-
 dataset_path_right = "C:/Users/ehdwl/Desktop/Trainingset/right"
-os.makedirs(dataset_path_right, exist_ok=True)
-
 dataset_path_left = "C:/Users/ehdwl/Desktop/Trainingset/left"
-os.makedirs(dataset_path_left, exist_ok=True)
-
 dataset_path_forward = "C:/Users/ehdwl/Desktop/Trainingset/forward"
-os.makedirs(dataset_path_forward, exist_ok=True)
 
 i = 0
 j = 0
 k = 0
 
-cap = cv2.VideoCapture("C:/Users/ehdwl/Desktop/road_video2.mp4")  # 비디오 파일 경로
+# Open the video file
+cap = cv2.VideoCapture("C:/Users/ehdwl/Desktop/road_video2.mp4")
 
-carstate = "stop"
+# Initialize car state to "go"
+carstate = "go"
 
 while cap.isOpened():
-    k = cv2.waitKey(10) & 0xFF  # 프레임 속도와 연결
-    if k == 27:
+    k = cv2.waitKey(10) & 0xFF  # Connect frame rate
+    if k == 27:  # Press 'Esc' key to exit
         break
-    elif k == 82:
+    elif k == 82:  # Press 'R' key to go forward
         print("go forward")
         carstate = "go"
-        # motor go
-    elif k == 81:
+        # Motor go forward
+    elif k == 81:  # Press 'Q' key to go left
         print("go left")
         carstate = "left"
-        # motor go left
-    elif k == 83:
+        # Motor go left
+    elif k == 83:  # Press 'S' key to go right
         print("go right")
         carstate = "right"
-        # motor go right
-    elif k == 84:
+        # Motor go right
+    elif k == 84:  # Press 'T' key to stop
         print("stop")
         carstate = "stop"
-        # motor stop
+        # Motor stop
 
-    ret, src = cap.read()  # 비디오에서 연속 프레임 읽기
+    # Read continuous frames from the video
+    ret, src = cap.read()
     if not ret:
         break
 
-    gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)  # 그레이스케일로 변환
+    print(src.shape)
+    # Crop the source frame to a specific region of interest
+    cropped_src = src[100:500, :]
 
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)  # 가우시안 블러링 적용
+    # Convert the cropped frame to grayscale
+    gray = cv2.cvtColor(cropped_src, cv2.COLOR_BGR2GRAY)
 
-    _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)  # 이진화 적용
+    # Apply Gaussian blur to the grayscale frame
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # 윤곽선 검출
+    # Apply binary thresholding to the blurred frame
+    _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)
 
-    mask = np.zeros_like(src)  # 결과 영상 생성
+    # Find contours in the binary frame
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)  # 윤곽선을 마스크에 그리기
+    # Create a mask with the same size as the cropped frame
+    mask = np.zeros_like(cropped_src)
 
-    # 레이블 정보 저장
-    cv2.imshow("original", src)
+    # Draw filled contours on the mask
+    cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)
+
+    # Display the original and masked frames
+    cv2.imshow("Original", src)
     cv2.imshow("Result", mask)
 
+    # Save the frames with appropriate labels based on the car state
     if carstate == "right":
         cv2.imwrite(os.path.join(dataset_path_right, "right_%05d.jpg" % i), mask)
         i += 1
@@ -76,5 +81,6 @@ while cap.isOpened():
         cv2.imwrite(os.path.join(dataset_path_forward, "forward_%05d.jpg" % k), mask)
         k += 1
 
+# Release the video and close all windows
 cap.release()
 cv2.destroyAllWindows()
