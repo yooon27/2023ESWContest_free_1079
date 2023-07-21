@@ -35,12 +35,87 @@ import sys
 from pathlib import Path
 
 import torch
+import cv2
+import time
+
+import RPi.GPIO as GPIO
+from time import sleep
+
+# Motor states
+CLEAN_STOP = 0
+CLEAN_EXECUTE = 1
+
+
+# Motor channels
+CH1 = 0
+CH2 = 1
+
+# Pin I/O settings
+OUTPUT = 1
+INPUT = 0
+
+# Pin settings
+HIGH = 1
+LOW = 0
+
+# Physical pin definitions
+# PWM PIN
+ENA = 26  # GPIO 37
+
+# GPIO PIN
+IN1 = 19  # GPIO 37
+IN2 = 13  # GPIO 35
+
+
+# Pin configuration function
+def setPinConfig(EN, INA):
+    GPIO.setup(EN, GPIO.OUT)
+    GPIO.setup(INA, GPIO.OUT)
+
+    # Set PWM frequency to 100kHz
+    pwm = GPIO.PWM(EN, 100)
+
+    # Initially stop PWM
+    pwm.start(0)
+    return pwm
+
+# Motor control function
+def setMotorControl(pwm, INA, speed, stat):
+    # Set motor speed with PWM
+    pwm.ChangeDutyCycle(speed)
+
+    if stat == CLEAN_STOP:
+        GPIO.output(INA, LOW)
+
+    # Backward
+    elif stat == CLEAN_EXECUTE:
+        GPIO.output(INA, HIGH)
+
+
+# Simplified motor control function
+def setMotor(ch, speed, stat):
+        # pwmA is the PWM handle returned after pin configuration
+        setMotorControl(pwmA, IN1, speed, stat)
+
+
+# GPIO mode setting
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
+# Motor pin configuration
+# Get PWM handles after pin configuration
+pwmA = setPinConfig(ENA, IN1)
+
+##################################################################################
+
+mid_x = 320 #이미지 전체의 가운데 x 좌표
+mid_y = 240 #이미지 전체의 가운데 y 좌표
 
 FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0]                                  # YOLOv5 root directory
-if str(ROOT) not in sys.path:                           
-    sys.path.append(str(ROOT))                          # add ROOT to PATH
-ROOT = Path(os.path.relpath(ROOT, Path.cwd()))          # relative
+ROOT = FILE.parents[0]  # YOLOv5 root directory
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 from models.common import DetectMultiBackend
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadScreenshots, LoadStreams
@@ -111,9 +186,7 @@ def run(
         dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
     vid_path, vid_writer = [None] * bs, [None] * bs
 
-
-
-##################################################### inference ####################################################
+    ##################################################### inference ####################################################
 
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
@@ -134,10 +207,6 @@ def run(
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
-
-
-
-
 
         # Second-stage classifier (optional)
         # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
@@ -169,6 +238,14 @@ def run(
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
+                    ###수정부분###
+                    #xyxy는 BBox의 xyxy[0] : x_min , xyxy[1] : y_min , xyxy[2] : x_max , xyxy[3] : y_max
+                    #result_img에서 img size : 640x480 => x_mid = 320 , y_mid = 240
+                    c1, c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
+                    center_point = round((c1[0] + c2[0]) / 2), round((c1[1] + c2[1]) / 2)
+                    cv2.circle(im0, center_point, 5, (0, 255, 0), 2)
+
+
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
@@ -177,14 +254,23 @@ def run(
 
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
-                        # x,y 좌표 나타내기 
-                        x, y, _, _ =xyxy #Extract x,y coordinates from xyxy format
-                        
-                        label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f} {x:.2f} {y:.2f}')
-                        
+                        # x,y 좌표 나타내기
+                        x, y, _, _ = xyxy  # Extract x,y coordinates from xyxy format
+                        # x,y : 각 bounding box의 왼쪽 하단 점을 나타내는 듯
+                        label = None if hide_labels else (
+                            names[c] if hide_conf else f'{names[c]} {conf:.2f} {center_point[0]:.0f} {center_point[1]:.0f}')
+
+                        if names[c] == 'laptop':
+                            print('LAPTOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
+
+
+
+
 
             # Stream results
             im0 = annotator.result()
@@ -217,10 +303,6 @@ def run(
 
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
-
-
-
-
 
     # Print results
     t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
