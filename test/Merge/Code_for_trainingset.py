@@ -82,10 +82,12 @@ GPIO.setmode(GPIO.BCM)
 # Motor pin configuration
 # Get PWM handles after pin configuration
 pwmA = setPinConfig(ENA, IN1, IN2)
-pwmB = setPinConfig(ENB, IN3, IN4) #ENB??
+pwmB = setPinConfig(ENB, IN3, IN4) 
 
 # Dataset saving paths
 dataset_path = "/home/raspberry/dataset"
+
+dataset_path_stop = "/home/raspberry/dataset/stop"
 
 
 dataset_path_right = "/home/raspberry/dataset/right"
@@ -94,13 +96,14 @@ dataset_path_right = "/home/raspberry/dataset/right"
 dataset_path_left = "/home/raspberry/dataset/left"
 
 
-dataset_path_forward = "/home/raspberry/dataset/forward"
+dataset_path_forward = "/home/raspberry/dataset/go"
 
 
 
 i = 0
 j = 0
 k = 0
+p = 0
 
 cap = cv2.VideoCapture(0)  # Video file path
 
@@ -164,8 +167,12 @@ while cap.isOpened():
         j += 1
 
     elif carstate == "go":
-        cv2.imwrite(f"{dataset_path_forward}/forward_{k:05d}.jpg", mask)
+        cv2.imwrite(f"{dataset_path_forward}/go_{k:05d}.jpg", mask)
         k += 1
+   
+    elif carstate == "stop":
+        cv2.imwrite(f"{dataset_path_forward}/stop_{k:05d}.jpg", mask)
+        p += 1
    
 
 # Cleanup GPIO
