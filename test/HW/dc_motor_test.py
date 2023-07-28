@@ -23,6 +23,7 @@ LOW = 0
 # Physical pin definitions
 # PWM PIN
 ENA = 26  # GPIO 37
+ENB = 27  # GPIO 
 
 # GPIO PIN
 IN1 = 19  # GPIO 37
