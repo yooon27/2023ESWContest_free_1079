@@ -38,6 +38,7 @@ IN4 = 5   # GPIO 29
 
 # Pin configuration function
 def setPinConfig(EN, INA, INB):
+    GPIO.setwarnings(False)
     GPIO.setup(EN, GPIO.OUT)
     GPIO.setup(INA, GPIO.OUT)
     GPIO.setup(INB, GPIO.OUT)
@@ -87,7 +88,26 @@ def setMotor(ch, speed, stat):
     else:
         # pwmB is the PWM handle returned after pin configuration
         setMotorControl(pwmB, IN3, IN4, speed, stat)
+        
+def Motor_backward():
+    setMotor(CH1, 80, BACKWARD)
+    setMotor(CH2, 80, BACKWARD)
+ 
+def Motor_go():
+    setMotor(CH1, 80, FORWARD)
+    setMotor(CH2, 80, FORWARD)
 
+def Motor_stop():
+    setMotor(CH1, 80, STOP)
+    setMotor(CH2, 80, STOP)
+
+def Motor_left():
+    setMotor(CH1, 80, FORWARD)
+    setMotor(CH2, 80, BACKWARD)
+
+def Motor_right():
+    setMotor(CH1, 80, BACKWARD)
+    setMotor(CH2, 80, FORWARD)
 
 # GPIO mode setting
 GPIO.setmode(GPIO.BCM)
@@ -97,13 +117,12 @@ GPIO.setmode(GPIO.BCM)
 pwmA = setPinConfig(ENA, IN1, IN2)
 pwmB = setPinConfig(ENB, IN3, IN4)
 
-motor_input = 2
-
 #main
 if __name__ == '__main__':
     serial = serial.Serial('/dev/ttyUSB0',115200,timeout=None)
     serial.flush()
     while True:
+        Motor_go() #line tracking function
         if serial.in_waiting>0:
             line = serial.readline().decode('utf=8').rstrip()
             arr = line.split()
@@ -118,38 +137,16 @@ if __name__ == '__main__':
                 distance_avg = distance_tot/50
                 if distance_avg > 15 and distance_avg < 30:
                     print("Motor stop\n")
-                    motor_input = 2 #motor stop
+                    Motor_stop()
+                    time.sleep(5)
                     print("take picture\n")
                     print("picture transmit\n")
                     print("Motor go\n")
-                    motor_input = 1 #motor forward
+                    Motor_go() #motor forward
                     print(distance_avg)
                     time.sleep(5) #escape drain
                 distance_tot = 0
                 count = 0
-            
-            if motor_input == 0:
-                # Move backward at 80% speed
-                setMotor(CH1, 80, BACKWARD)
-                setMotor(CH2, 80, BACKWARD)
-            elif motor_input == 1:
-                # Move forward at 80% speed
-                setMotor(CH1, 80, FORWARD)
-                setMotor(CH2, 80, FORWARD)
-            elif motor_input == 2:
-                # Stop
-                setMotor(CH1, 0, STOP)
-                setMotor(CH2, 0, STOP)
-            elif motor_input == 3:
-                # Move to the left
-                setMotor(CH1, 80, FORWARD)
-                setMotor(CH2, 80, BACKWARD)
-            elif motor_input == 4:
-                # Move to the right
-                setMotor(CH1, 80, BACKWARD)
-                setMotor(CH2, 80, FORWARD)
-            else:
-                print("Invalid input. Try again.")
             
             print(count,distance_center, distance_1 ,distance_2, distance_cal, distance_avg)
     # Cleanup GPIO
