@@ -48,7 +48,7 @@ while cap.isOpened():
         break
 
     # Crop the source frame to a specific region of interest
-    cropped_src = src[200:500, :]
+    cropped_src = src[200:600, :]
 
     # Convert the cropped frame to grayscale
     gray = cv2.cvtColor(cropped_src, cv2.COLOR_BGR2GRAY)
