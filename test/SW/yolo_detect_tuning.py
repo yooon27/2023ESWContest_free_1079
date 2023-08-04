@@ -62,13 +62,18 @@ db = firebase.database()
 
 
 # Motor states
-CLEAN_STOP = 0
-CLEAN_EXECUTE = 1
+
+STOP = 0
+FORWARD = 1
+BACKWARD = 2
+LEFT = 3
+RIGHT = 4
 
 
 # Motor channels
 CH1 = 0
 CH2 = 1
+CH3 = 3
 
 # Pin I/O settings
 OUTPUT = 1
@@ -80,17 +85,25 @@ LOW = 0
 
 # Physical pin definitions
 # PWM PIN
-ENA = 26  # GPIO 37
+ENA = 26  # 37 pin
+ENB = 0   # 27 pin
+ENC = 18  # 28 pin
 
 # GPIO PIN
-IN1 = 19  # GPIO 37
-IN2 = 13  # GPIO 35
+IN1 = 19  # 37 pin
+IN2 = 13  # 35 pin
+IN3 = 6   # 31 pin
+IN4 = 5   # 29 pin
+IN5 = 23
+IN6 = 24
 
 
 # Pin configuration function
-def setPinConfig(EN, INA):
+def setPinConfig(EN, INA, INB):
+    GPIO.setwarnings(False)
     GPIO.setup(EN, GPIO.OUT)
     GPIO.setup(INA, GPIO.OUT)
+    GPIO.setup(INB, GPIO.OUT)
 
     # Set PWM frequency to 100kHz
     pwm = GPIO.PWM(EN, 100)
@@ -100,22 +113,36 @@ def setPinConfig(EN, INA):
     return pwm
 
 # Motor control function
-def setMotorControl(pwm, INA, speed, stat):
+def setMotorControl(pwm, INA, INB, speed, stat):
     # Set motor speed with PWM
     pwm.ChangeDutyCycle(speed)
 
-    if stat == CLEAN_STOP:
-        GPIO.output(INA, LOW)
-
-    # Backward
-    elif stat == CLEAN_EXECUTE:
+    if stat == FORWARD:
         GPIO.output(INA, HIGH)
+        GPIO.output(INB, LOW)
+
+    # backward
+    elif stat == BACKWARD:
+        GPIO.output(INA, LOW)
+        GPIO.output(INB, HIGH)
+
+    # stop
+    elif stat == STOP:
+        GPIO.output(INA, LOW)
+        GPIO.output(INB, LOW)
 
 
 # Simplified motor control function
 def setMotor(ch, speed, stat):
-        # pwmA is the PWM handle returned after pin configuration
-        setMotorControl(pwmA, IN1, speed, stat)
+    if ch == CH1:
+        # pwmA는 핀 설정 후 pwm 핸들을 리턴 받은 값이다.
+        setMotorControl(pwmA, IN1, IN2, speed, stat)
+    elif ch == CH2:
+        # pwmB는 핀 설정 후 pwm 핸들을 리턴 받은 값이다.
+        setMotorControl(pwmB, IN3, IN4, speed, stat)
+    elif ch == CH3:  # 모터3 추가
+        # pwmC는 핀 설정 후 pwm 핸들을 리턴 받은 값이다.
+        setMotorControl(pwmC, IN5, IN6, speed, stat)
 
 
 # GPIO mode setting
@@ -124,7 +151,9 @@ GPIO.setmode(GPIO.BCM)
 
 # Motor pin configuration
 # Get PWM handles after pin configuration
-pwmA = setPinConfig(ENA, IN1)
+pwmA = setPinConfig(ENA, IN1, IN2)
+pwmB = setPinConfig(ENB, IN3, IN4)
+pwmC = setPinConfig(ENC, IN5, IN6)  # 모터3에 연결된 핀 설정
 
 ##################################################################################
 
@@ -282,7 +311,10 @@ def run(
 
                         if names[c] == 'laptop':
                             print('LAPTOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                            db.child("test").child("test").set("1")
+                            Brush_execute()
+                            countButts(1)
+                            time.sleep(5) #객체 인식 후 담기까지 시간 측정
+                            
 
 
                         annotator.box_label(xyxy, label, color=colors(c, True))
@@ -378,3 +410,33 @@ def main(opt):
 if __name__ == '__main__':
     opt = parse_opt()
     main(opt)
+
+
+def countButts(number):
+    num = db.child("numberButts").get()
+    number += num.val()
+    db.child("numberButts").set(number)
+    
+
+
+def Motor_Backward():
+    setMotor(CH1, 80, BACKWARD)
+    setMotor(CH2, 80, BACKWARD)
+    setMotor(CH3, 80, BACKWARD)  # 모터3도 뒤로 이동
+    
+def Motor_Forward():
+    setMotor(CH1, 80, FORWARD)
+    setMotor(CH2, 80, FORWARD)
+    setMotor(CH3, 80, FORWARD)  # 모터3도 뒤로 이동
+    
+def Motor_Stop():
+    setMotor(CH1, 80, STOP)
+    setMotor(CH2, 80, STOP)
+    setMotor(CH3, 80, STOP)  # 모터3도 뒤로 이동
+    
+def Brush_execute():
+    setMotor(CH1, 80, FORWARD)
+    setMotor(CH2, 80, FORWARD)
+    setMotor(CH3, 100, FORWARD)  # 모터3도 뒤로 이동
+
+GPIO.cleanup()
