@@ -27,6 +27,10 @@ Usage - formats:
                                  yolov5s_edgetpu.tflite     # TensorFlow Edge TPU
                                  yolov5s_paddle_model       # PaddlePaddle
 """
+import pyrebase
+import time
+
+
 
 import argparse
 import os
@@ -40,6 +44,22 @@ import time
 
 import RPi.GPIO as GPIO
 from time import sleep
+
+# FireBase Info #
+firebaseConfig = {
+    'apiKey': "AIzaSyCd5azxskAsJPxzUhYrJKbFe0nO99Kj4_E",
+    'authDomain': "image-54a1e.firebaseapp.com",
+    'databaseURL': "https://image-54a1e-default-rtdb.firebaseio.com",
+    'projectId': "image-54a1e",
+    'storageBucket': "image-54a1e.appspot.com",
+    'messagingSenderId': "121769632696",
+    'appId': "1:121769632696:web:994f0ad48371b86107254d",
+    'measurementId': "G-DXRCVJGZ9H"
+    }
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+db = firebase.database()
+
 
 # Motor states
 CLEAN_STOP = 0
@@ -262,6 +282,7 @@ def run(
 
                         if names[c] == 'laptop':
                             print('LAPTOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                            db.child("test").child("test").set("1")
 
 
                         annotator.box_label(xyxy, label, color=colors(c, True))
