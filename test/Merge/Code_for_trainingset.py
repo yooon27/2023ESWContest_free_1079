@@ -85,18 +85,11 @@ pwmA = setPinConfig(ENA, IN1, IN2)
 pwmB = setPinConfig(ENB, IN3, IN4) 
 
 # Dataset saving paths
-dataset_path = "/home/raspberry/dataset"
-
-dataset_path_stop = "/home/raspberry/dataset/stop"
-
-
-dataset_path_right = "/home/raspberry/dataset/right"
-
-
-dataset_path_left = "/home/raspberry/dataset/left"
-
-
-dataset_path_forward = "/home/raspberry/dataset/go"
+dataset_path = "/home/raspberrypi/dataset"
+dataset_path_stop = "/home/raspberrypi/dataset/stop"
+dataset_path_right = "/home/raspberrypi/dataset/right"
+dataset_path_left = "/home/raspberrypi/dataset/left"
+dataset_path_forward = "/home/raspberrypi/dataset/go"
 
 
 
