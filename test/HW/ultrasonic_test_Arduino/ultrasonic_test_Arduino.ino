@@ -8,7 +8,7 @@ uint16_t distance_center,strength;
 
 
 int trig_1 = 2 , echo_1 =3; //ultrasonic_1 pin 
-int trig_2 = 5, echo_2 = 6; //ultrasonic_2 pin 
+int trig_2 = 10, echo_2 = 11; //ultrasonic_2 pin 
 
 long distance_1, duration_1; 
 long distance_2, duration_2;
@@ -55,25 +55,29 @@ void loop() {
 
   else{
     distance_avg = distance_tot/50;
-      if(distance_avg > 15 & distance_avg <30){
-        Serial.println("Motor stop and take a picture"); //모터 멈추고 카메라로 사진 찍기
-        Serial.print("Motor go"); //하수구 탈출 명령
-        Serial.print("     ");
-        Serial.print(distance_avg);
-        delay(5000); //하수구 탈출 시간
-    }
+    //   if(distance_avg > 15 & distance_avg <30){
+    //     //Serial.println("Motor stop and take a picture"); //모터 멈추고 카메라로 사진 찍기
+    //     //Serial.print("Motor go"); //하수구 탈출 명령
+    //     //Serial.print("     ");
+    //     //Serial.print(distance_avg);
+    //     //delay(5000); //하수구 탈출 시간
+    // }
       distance_tot = 0;
       count = 0;
     }
 Serial.print(count);
 Serial.print("      ");
-Serial.print("Distance_center = ");
+//Serial.print("Distance_center = ");
+
 Serial.print(distance_center);
-Serial.print("cm        distance_1= ");
+//Serial.print("cm        distance_1= ");
+Serial.print("      ");
 Serial.print(distance_1);
-Serial.print("cm       distance_2= ");
+//Serial.print("cm       distance_2= ");
+Serial.print("      ");
 Serial.print(distance_2);
-Serial.print("cm       average= ");
+Serial.print("      ");
+//Serial.print("cm       average= ");
 Serial.println(distance_tot/count);
 
 
