@@ -2,7 +2,7 @@ import cv2
 import time
 
 # Create a VideoCapture object for the webcam (use 0 for the default webcam)
-webcam = cv2.VideoCapture(0)
+webcam = cv2.VideoCapture(1)
 
 # Set the streaming interval (in seconds)
 stream_interval = 5
@@ -27,8 +27,8 @@ while True:
     if current_time - start_time >= stream_interval:
         start_time = current_time  # Reset the start time
 
-        # Create a VideoCapture object for the Pi Camera 
-        picam = cv2.VideoCapture(2)
+        # Create a VideoCapture object for the Pi Camera (use 2 for /dev/video2, adjust if necessary)
+        picam = cv2.VideoCapture(0)
 
         # Capture a frame from the Pi Camera
         ret_pi, frame_pi = picam.read()
@@ -38,7 +38,7 @@ while True:
 
         # Save the captured frame to the Raspberry Pi home directory
         image_path = "/home/raspberrypi"  # Change the path as needed
-        cv2.imwrite(f"{image_path}.{i}.jpg", frame_pi)
+        cv2.imwrite(f"{image_path}/{i}.jpg", frame_pi)
         i = i + 1
 
         print("Image captured and saved:", image_path)
