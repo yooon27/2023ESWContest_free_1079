@@ -2,30 +2,12 @@ import serial
 import time
 import RPi.GPIO as GPIO
 import cv2
-import pynmea2
-import pyrebase
-
-firebaseConfig = {
-    'apiKey': "AIzaSyCd5azxskAsJPxzUhYrJKbFe0nO99Kj4_E",
-    'authDomain': "image-54a1e.firebaseapp.com",
-    'databaseURL': "https://image-54a1e-default-rtdb.firebaseio.com",
-    'projectId': "image-54a1e",
-    'storageBucket': "image-54a1e.appspot.com",
-    'messagingSenderId': "121769632696",
-    'appId': "1:121769632696:web:994f0ad48371b86107254d",
-    'measurementId': "G-DXRCVJGZ9H"
-    }
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
-st = firebase.storage()
-
 
 # Create a VideoCapture object for the webcam (use 0 for the default webcam)
 webcam = cv2.VideoCapture(0)
 
 # Set the streaming interval (in seconds)
 stream_interval = 5
-i = 2
 
 # Motor states
 STOP = 0
@@ -60,28 +42,6 @@ IN1 = 19  # GPIO 37
 IN2 = 13  # GPIO 35
 IN3 = 6   # GPIO 31
 IN4 = 5   # GPIO 29
-
-
-
-def drainLoc():
-    #captureImage()
-    #latitude,longitude =location()
-    #number = db.child("numberMarker").get()
-    snum = str(2)
-    st.child("image").child(snum).put("/home/raspberrypi/" + str(snum)+".jpg")
-    # db.child("gps").child(snum).child("lati" ).set(latitude)
-    # db.child("gps").child(snum).child("long").set(longitude)
-    #latitude & longtitude test code
-    db.child("gps").child(snum).child("lati" ).set(str(37.311026))
-    db.child("gps").child(snum).child("long").set(str(126.823160))
-    #plusNumber = number.val()+1
-    #db.child("numberMarker").set(plusNumber)
-    print("complete upload module")
-
-
-
-
-
 
 
 # Pin configuration function
@@ -169,6 +129,7 @@ if __name__ == '__main__':
     serial = serial.Serial('/dev/ttyUSB0',115200,timeout=None)
     serial.flush()
     while True:
+        upload.robotLoc()
         # Capture frame-by-frame from the webcam
         ret_webcam, frame_webcam = webcam.read()
         
@@ -185,15 +146,15 @@ if __name__ == '__main__':
             line = serial.readline().decode('utf=8').rstrip()
             arr = line.split()
             
-            distance_center = int(arr[1])
-            distance_1 = int(arr[2])
-            distance_2 = int(arr[3])
-            distance_cal = int(arr[4])
+            distance_center = int(arr[3])
+            distance_1 = int(arr[6])
+            distance_2 = int(arr[9])
+            distance_cal = int(arr[12])
             count += 1
             distance_tot += distance_cal
             if count == 50:
                 distance_avg = distance_tot/50
-                if distance_avg > 15 and distance_avg < 300:
+                if distance_avg > 15 and distance_avg < 30:
                     print("Motor stop\n")
                     Motor_stop()
                     time.sleep(5)
@@ -207,17 +168,17 @@ if __name__ == '__main__':
 
                     # Release the Pi Camera capture object
                     picam.release()
+                    
+                    markerNumber = upload.markerNum()
 
                     # Save the captured frame to the Raspberry Pi home directory
-                    image_path = "/home/raspberrypi"  # Change the path as needed
-                    cv2.imwrite(f"{image_path}/{i}.jpg", frame_pi)
-                    i = i + 1
+                    image_path = "/home/raspberrypi/captureImage"  # Change the path as needed
+                    cv2.imwrite(f"{image_path}/{markerNumber}.jpg", frame_pi)
 
                     
                     print("picture transmit\n")
                     
-                    drainLoc()
-                    
+                    upload.drainLoc()
                     
                     print("Motor go\n")
                     Motor_go() #motor forward
