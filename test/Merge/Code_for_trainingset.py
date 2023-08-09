@@ -90,13 +90,16 @@ dataset_path_stop = "/home/raspberrypi/dataset/stop"
 dataset_path_right = "/home/raspberrypi/dataset/right"
 dataset_path_left = "/home/raspberrypi/dataset/left"
 dataset_path_forward = "/home/raspberrypi/dataset/go"
-
+dataset_path_go_left = "/hoem/raspberrypi/dataset/go_left"
+dataset_path_go_right = "/home/raspberrypi/dataset/go_right"
 
 
 i = 0
 j = 0
 k = 0
 p = 0
+q = 0
+r = 0
 
 cap = cv2.VideoCapture(0)  # Video file path
 
@@ -107,28 +110,43 @@ while cap.isOpened():
     
     if key == 27:
         break
-    elif key == 82:
+    elif key == 115:
         print("go")
         carstate = "go"
         setMotor(CH1, 80, FORWARD)
         setMotor(CH2, 80, FORWARD)
         
-    elif key == 81:
+    elif key == 97:
         print("left")
         carstate = "left"
-        setMotor(CH1, 80, FORWARD)
-        setMotor(CH2, 80, BACKWARD)
-    elif key == 83:
+        setMotor(CH1, 40, FORWARD)
+        setMotor(CH2, 100, FORWARD)
+        
+    elif key == 100:
         print("right")
         carstate = "right"
-        setMotor(CH1, 80, BACKWARD)
-        setMotor(CH2, 80, FORWARD)
+        setMotor(CH1, 100, FORWARD)
+        setMotor(CH2, 40, FORWARD)
        
-    elif key == 84:
+    elif key == 115:
         print("stop")
         carstate = "stop"
         setMotor(CH1, 0, STOP)
         setMotor(CH2, 0, STOP)
+        
+    elif key == 113:
+        print("go_left")
+        carstate = "go_left"
+        setMotor(CH1, 40, FORWARD)
+        setMotor(CH2, 70, FORWARD)
+
+
+    elif key ==101:
+        print("go_right")
+        carstate = "go_right"
+        setMotor(CH1, 70, FORWARD)
+        setMotor(CH2, 40, FORWARD)
+
 
     ret, src = cap.read()  # Read frames from the video
     if not ret:
@@ -163,10 +181,13 @@ while cap.isOpened():
         cv2.imwrite(f"{dataset_path_forward}/go_{k:05d}.jpg", mask)
         k += 1
    
+    elif carstate == "go_left":
+        cv2.imwrite(f"{dataset_path_go_left}/stop_{q:05d}.jpg", mask)
+        q += 1
+
     elif carstate == "stop":
-        cv2.imwrite(f"{dataset_path_forward}/stop_{k:05d}.jpg", mask)
-        p += 1
-   
+        cv2.imwrite(f"{dataset_path_go_right}/stop_{r:05d}.jpg", mask)
+        r += 1
 
 # Cleanup GPIO
 GPIO.cleanup()
