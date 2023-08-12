@@ -86,7 +86,6 @@ pwmB = setPinConfig(ENB, IN3, IN4)
 
 # Dataset saving paths
 dataset_path = "/home/raspberrypi/dataset"
-dataset_path_stop = "/home/raspberrypi/dataset/stop"
 dataset_path_right = "/home/raspberrypi/dataset/right"
 dataset_path_left = "/home/raspberrypi/dataset/left"
 dataset_path_forward = "/home/raspberrypi/dataset/go"
@@ -124,12 +123,7 @@ while cap.isOpened():
         setMotor(CH1, 80, BACKWARD)
         setMotor(CH2, 80, FORWARD)
        
-    elif key == 84:
-        print("stop")
-        carstate = "stop"
-        setMotor(CH1, 0, STOP)
-        setMotor(CH2, 0, STOP)
-
+    
     ret, src = cap.read()  # Read frames from the video
     if not ret:
         break
@@ -163,9 +157,6 @@ while cap.isOpened():
         cv2.imwrite(f"{dataset_path_forward}/go_{k:05d}.jpg", mask)
         k += 1
    
-    elif carstate == "stop":
-        cv2.imwrite(f"{dataset_path_forward}/stop_{k:05d}.jpg", mask)
-        p += 1
    
 
 # Cleanup GPIO

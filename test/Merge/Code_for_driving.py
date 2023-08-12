@@ -1,12 +1,10 @@
-import random
 import numpy as np
 import cv2
 import RPi.GPIO as GPIO
 from time import sleep
 import tensorflow as tf
-from keras.preprocessing.image import load_img, img_to_array
-from keras.models import load_model
-import serial
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.models import load_model
 import time
 
 
@@ -92,86 +90,83 @@ GPIO.setmode(GPIO.BCM)
 pwmA = setPinConfig(ENA, IN1, IN2)
 pwmB = setPinConfig(ENB, IN3, IN4) #ENB??
 
-# Load RESNET 50 model(Should be modified)
+# Load MobilenetV2 model
+#You can load learned model by path
+#model_path = '/home/pi/models/autodriving_256.h5'
+#model = load_model('model_path')
+model = load_model('autodriving_256.h5')
 
-model = load_model('address')
 
-
-i = 0
-j = 0
-k = 0
 
 cap = cv2.VideoCapture(0)  # Video file path
 
 carstate = "stop"
 
 while cap.isOpened():
-    key = cv2.waitKey(10) & 0xFF  # Frame rate and key detection
 
     ret, src = cap.read()  # Read frames from the video
 
     if not ret:
         break
-
-    ######################################
-    # Receive using Serial Communication #
-    ######################################
-
-    
-    distance = random
-
-    if distance < 15 :
-        carstate = "stop"
         
     
-    else :
-        src = cv2.flip(src,-1)
-    
-        gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+    gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
-        blurred = cv2.GaussianBlur(gray, (5, 5), 0)  # Apply Gaussian blur
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)  # Apply Gaussian blur
 
-        _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)  # Apply thresholding
+    _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)  # Apply thresholding
 
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
 
-        mask = np.zeros_like(src)  # Create a blank mask
+    mask = np.zeros_like(src)  # Create a blank mask
 
-        cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)  # Draw contours on the mask
+    cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)  # Draw contours on the mask
 
 
-        cv2.imshow("Result", mask)
+    cv2.imshow("Result", mask)
 
-        input_image = cv2.resize(mask, (224, 224))  # Resize the image to match the model input size
-        input_image = np.expand_dims(input_image, axis=0)
-        input_image = input_image / 255.0  # Normalize the image (assuming the model was trained with normalized inputs)
+    input_image = cv2.resize(mask, (224, 224))  # Resize the image to match the model input size
+    input_image = np.expand_dims(input_image, axis=0)
+    input_image = input_image / 255.0  # Normalize the image (assuming the model was trained with normalized inputs)
 
         # Predict using the loaded model
-        predictions = model.predict(input_image)
-        predicted_class_index = np.argmax(predictions[0])
-        predicted_class = ['stop', 'go', 'left', 'right'][predicted_class_index]
+    predictions = model.predict(input_image)
+    predicted_class_index = np.argmax(predictions[0])
+    predicted_class = ['go_case1', 'go_left_case1', 'go_right_case1', 'left_case1','right_case1'][predicted_class_index]
 
-        # Update carstate based on the predicted direction
-        carstate = predicted_class
+    # Update carstate based on the predicted direction
+    carstate = predicted_class
+
+    key = cv2.waitKey(10) & 0xFF
 
     if key == 27:
         break
-    elif carstate == "go":
-        setMotor(CH1, 80, FORWARD)
-        setMotor(CH2, 80, FORWARD)
+
+    elif key == ord('s'):
+        carstate = "stop"
+
+    else:
+        if carstate == "go_case1":
+            setMotor(CH1, 80, FORWARD)
+            setMotor(CH2, 80, FORWARD)
         
-    elif carstate == "left":
-        setMotor(CH1, 80, FORWARD)
-        setMotor(CH2, 80, BACKWARD)
-    elif carstate == "right":
-        setMotor(CH1, 80, BACKWARD)
-        setMotor(CH2, 80, FORWARD)
+        elif carstate == "go_left_case1":
+            setMotor(CH1, 40, FORWARD)
+            setMotor(CH2, 70, FORWARD)
+        elif carstate == "go_right_case1":
+            setMotor(CH1, 70, FORWARD)
+            setMotor(CH2, 40, FORWARD)
        
-    elif carstate == "stop":
-        setMotor(CH1, 0, STOP)
-        setMotor(CH2, 0, STOP)
-
-
+        elif carstate == "left_case1":
+            setMotor(CH1, 40, STOP)
+            setMotor(CH2, 100, STOP)
+        elif carstate == "right_case1":
+            setMotor(CH1, 100, FORWARD)
+            setMotor(CH2, 40, FORWARD)
+        elif carstate == "stop":
+            setMotor(CH1, 0, STOP)
+            setMotor(CH2, 0, STOP)
+            
 # Cleanup GPIO
 GPIO.cleanup()
 cap.release()
