@@ -23,7 +23,7 @@ m = 0
 
 
 # Open the video file
-cap = cv2.VideoCapture("C:/Users/dongjin/Desktop/Lane detect test data.mp4")
+cap = cv2.VideoCapture("C:/Users/dongjin/Desktop/rockroad.mp4")
 
 # Initialize car state to "go"
 carstate = "go"
@@ -67,9 +67,12 @@ while cap.isOpened():
     if not ret:
         break
 
-    # Crop the source frame to a specific region of interest
-    cropped_src = src[200:600, :]
+   
 
+    # Crop the source frame to a specific region of interest
+    cropped_src = src[100:700, 350:720]
+
+    print(cropped_src.shape)
     # Convert the cropped frame to grayscale
     gray = cv2.cvtColor(cropped_src, cv2.COLOR_BGR2GRAY)
 
@@ -77,7 +80,7 @@ while cap.isOpened():
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
     # Apply binary thresholding to the blurred frame
-    _, thresh = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY) # value should be modified 
+    _, thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY) # value should be modified 
 
     # Find contours in the binary frame
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -87,8 +90,7 @@ while cap.isOpened():
 
     # Draw filled contours on the mask
     cv2.drawContours(mask, contours, -1, (255, 255, 255), thickness=cv2.FILLED)
-    
-    
+
 
     # Save the frames with appropriate labels based on the car state
     if carstate == "right":
