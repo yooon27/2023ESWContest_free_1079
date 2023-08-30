@@ -16,12 +16,12 @@
 
 
 
-## 기능
+## 작품 종합 기능
 
-- <a href="">어플리케이션</a>
-- <a href="">차량 가장자리 자율주행</a>
+- <a href="https://github.com/yooon27/2023ESWContest_free_1079/tree/main/2023ESWContest_free_1079/Project/Application">어플리케이션</a>
+- <a href="">차량 가장자리 자율주행 + 하수구 탐색 및 사진 촬영</a>
 - <a href="">담배꽁초 청소 기능</a>
-- <a href="">하수구 탐색 및 사진 촬영</a>
+
 
 <br>
 
@@ -40,8 +40,9 @@
 
 <br>
 
-## 
+## 파일 관리
 <br/>
+'''
 📦2023ESWContest_free_1079 <br/>
 📂Project <br/>
  ┣ 📂Arduino <br/>
@@ -97,6 +98,7 @@
  ┃ ┃ ┗ 📜best_ESC.pt <br/>
  ┃ ┃ ┗ 📜trained_yolov5_custom_data.ipynb <br/>
  ┗ 📜README.md
+ '''
 <br><br>
 
 ## 팀 명단
