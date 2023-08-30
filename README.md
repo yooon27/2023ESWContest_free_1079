@@ -1,6 +1,5 @@
 # 제 21회 임베디드 소프트웨어 경진대회 자유공모부문
 <div align="left">
-//여기에 유트브 링크 넣기
 <a href="https://www.youtube.com/watch?v=rZodmwJkPVo"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white"/></a>
 </div>
 
@@ -50,8 +49,8 @@
 ## 팀 명단
 | Profile | Role | Part | Tech Stack |
 | ------- | ---- | ---- | ---------- |
-| <div align="center"><a href=""><br/><sub><b>신윤성</b><sub></a></div> | 팀장 | PM, SW, CV| RaspberryPi, Arduino, C, Python, YOLOv5|
-| <div align="center"><a href=""><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW | RaspberryPi, designed & made |
-| <div align="center"><a href=""><br/><sub><b>안서현</b></sub></a></div> | 팀원 | HW | RaspberryPi, 3D modeling(123D), designed & made |
-| <div align="center"><a href=""><br/><sub><b>김동진</b></sub></a></div> | 팀원 | SW, CV | RasberryPi, OpenCV, Python, C++ |
-| <div align="center"><a href=""><br/><sub><b>조규범</b></sub></a></div> | 팀원 | UI, HW | Python, Firebase, Flutter, Android, Fusion360 |
+| <div align="center"><a href="github.com/yooon27"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/cf97c9f2-2891-4a58-b276-4117dc236332" width="70px;" alt=""/><br/><sub><b>신윤성</b><sub></a></div> | 팀장 | PM, SW, CV| RaspberryPi, Arduino, C, Python, YOLOv5|
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/0f0d2abf-4a11-4d31-bf61-b18ff8c27cea" width="70px;" alt=""/><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW manager | RaspberryPi, designed & made |
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/681ef831-baab-4465-a0e0-9947e5e34e86" width="70px;" alt=""/><br/><sub><b>안서현</b></sub></a></div> | 팀원 | HW manager | RaspberryPi, 3D modeling(123D Design), designed & made |
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/9574e9ba-70b3-4658-a3cc-b98d443f67fd" width="70px;" alt=""/><br/><sub><b>김동진</b></sub></a></div> | 팀원 | SW, CV | RasberryPi, OpenCV, Python, C++ |
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/84618138-ad6c-4476-a1cf-be24be954dcf" width="70px;" alt=""/><br/><sub><b>조규범</b></sub></a></div> | 팀원 | UI, HW | Python, Firebase, Flutter, Android, Fusion360 |
