@@ -124,8 +124,8 @@ class _infoPageState extends State<infoPage> {
                     child: TextButton(
                         onPressed: (){
                           setState(() {
-                            states = "go";
-                            robotState("go");
+                            states = "forward";
+                            robotState("forward");
                           });
                         },
                         child: Text("GO",style: TextStyle(fontSize: 20,color: Colors.white),)),

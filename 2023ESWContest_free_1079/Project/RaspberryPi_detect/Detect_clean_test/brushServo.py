@@ -4,6 +4,7 @@ import time
 
 servo_pin = 12
 brush = 2 #pin = 3
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin, GPIO.OUT) 
 

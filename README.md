@@ -37,59 +37,75 @@
 ## 개발결과물의 시장성 및 활용성
 ### 
 
+<br>
+
+## 전체 흐름도
+<div align="center"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/b2c86025-4c71-4e59-9992-b82815366ec4" width="600px;" alt="FlowChat" /></div>
+
+
 
 <br>
 
 ## 파일 관리
 <br/>
-'''
+ '''
 📦2023ESWContest_free_1079 <br/>
 📂Project <br/>
- ┣ 📂Arduino <br/>
+ ┣ 📂Arduino_sensor <br/>
  ┃ ┣ 📜 drain_detect.ino <br/>
  ┣ 📂Application <br/>
  ┃ ┣ 📂 android  <br/>
  ┃ ┃ ┣ 📂 app  <br/>
- ┃ ┃ ┃ ┣ 📂 src  <br/>
- ┃ ┃ ┃ ┣ 📜 google-services.json  <br/>
  ┃ ┃ ┣ 📂 gradle  <br/>
  ┃ ┃ ┃ ┣ 📂 wrapper  <br/>
  ┃ ┣ 📂 assets  <br/>
  ┃ ┣ 📂 ios  <br/>
- ┃ ┃ ┣ 📂 Flutter  <br/>
- ┃ ┃ ┣ 📂 Runner  <br/>
- ┃ ┃ ┣ 📂 Runner.xcodeproj  <br/>
- ┃ ┃ ┣ 📂 Runner.xcworkspace  <br/>
- ┃ ┃ ┣ 📜 firebase_app_id_file.json  <br/>
  ┃ ┣ 📂 lib  <br/>
  ┃ ┃ ┣ 📜 firebase_options.dart  <br/>
  ┃ ┃ ┣ 📜 ImagePage.dart  <br/>
  ┃ ┃ ┣ 📜 infoPage.dart  <br/>
  ┃ ┃ ┣ 📜 main.dart  <br/>
  ┃ ┣ 📂 linux  <br/>
- ┃ ┃ ┣ 📂 flutter  <br/>
- ┃ ┃ ┣ 📜 main.cc  <br/>
- ┃ ┃ ┣ 📜 my_application.cc  <br/>
- ┃ ┃ ┣ 📜 CMakeList.txt  <br/>
  ┃ ┣ 📂 macos  <br/>
  ┃ ┣ 📂 test  <br/>
  ┃ ┣ 📂 web  <br/>
  ┃ ┃ ┣ 📂 icons  <br/>
  ┃ ┃ ┣ 📂 splash  <br/>
- ┃ ┃ ┣  index.html  <br/>
  ┃ ┣ 📂 windows  <br/>
- ┃ ┣ 📜 analysis_options.yaml  <br/>
- ┃ ┣ 📜 pubspec.yaml  <br/>
  ┃ ┣ 📜 README.md  <br/>
+ ┣ 📂RaspberryPi_Autonomous <br/>
+ ┃ ┣ 📂 Autonomous <br/>
+ ┃ ┃ ┣ 📜 carControl.py  <br/>
+ ┃ ┃ ┣ 📜 drain.py  <br/>
+ ┃ ┃ ┣ 📜 line.py  <br/>
+ ┃ ┃ ┣ 📜 start_autonomous.py  <br/>
+ ┃ ┃ ┣ 📜 tracking.py  <br/>
+ ┃ ┣ 📂 App <br/>
+ ┃ ┃ ┣ 📜 carControl.py  <br/>
+ ┃ ┃ ┣ 📜 robotState.py  <br/>
+ ┃ ┃ ┣ 📜 upload.py  <br/>
+ ┃ ┃ ┣ 📜 start_app_autonomous.py  <br/>
+ ┃ ┃ ┣ 📜 tracking.py  <br/>
+ ┃ ┣ 📜 README.autonomous.md <br/>
  ┣ 📂RaspberryPi_detect <br/>
- ┃ ┣ 📜 dc_motor_test.py <br/>
- ┃ ┣ 📜 servo_motor_test.py <br/>
- ┣ 📂RaspberryPi_ <br/>
+ ┃ ┣ 📂 Detect_clean_test <br/>
+ ┃ ┣ 📂 object_detect_clean <br/>
+ ┃ ┃ ┣ 📂 detect_yolov5 <br/>
+ ┃ ┃ ┃ ┣ 📂 __pycache__ <br/>
+ ┃ ┃ ┃ ┣ 📂 classify <br/>
+ ┃ ┃ ┃ ┣ 📂 data <br/>
+ ┃ ┃ ┃ ┣ 📂 models <br/>
+ ┃ ┃ ┃ ┣ 📂 runs <br/>
+ ┃ ┃ ┃ ┣ 📂 segment <br/>
+ ┃ ┃ ┃ ┣ 📂 utils <br/>
+ ┃ ┃ ┃ ┣ 📜 start_detect.py <br/>
+ ┃ ┃ ┃ ┣ 📜 requirements.txt <br/>
+ ┃ ┣ 📂 App <br/>
+ ┃ ┃ ┣ 📜 brushServo.py  <br/>
+ ┃ ┃ ┣ 📜 robotState.py  <br/>
+ ┃ ┃ ┣ 📜 start_app_detect.py  <br/>
+ ┃ ┣ 📜 README.detect.md <br/>
  ┣ 📂server <br/>
- ┃ ┣ 📂wallpad <br/>
- ┃ ┃ ┗ 📂appstore <br/>
- ┃ ┃ ┃ ┣ 📂appstore_app <br/>
- ┃ ┃ ┃ ┗ 📂appstore_service <br/>
  ┃ ┣ 📂detect_yolo <br/>
  ┃ ┃ ┗ 📂dataset <br/>
  ┃ ┃ ┃ ┣ 📂appstore_app <br/>
@@ -97,6 +113,7 @@
  ┃ ┃ ┗ 📂result_video <br/>
  ┃ ┃ ┗ 📜best_ESC.pt <br/>
  ┃ ┃ ┗ 📜trained_yolov5_custom_data.ipynb <br/>
+ ┣ 📂Picture <br/>
  ┗ 📜README.md
  '''
 <br><br>
