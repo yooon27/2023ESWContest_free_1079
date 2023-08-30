@@ -128,7 +128,7 @@
 | Profile | Role | Part | Tech Stack |
 | ------- | ---- | ---- | ---------- |
 | <div align="center"><a href="https://github.com/yooon27"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/cf97c9f2-2891-4a58-b276-4117dc236332" width="70px;" alt=""/><br/><sub><b>신윤성</b><sub></a></div> | 팀장 | PM, SW, CV| RaspberryPi, Arduino, C, Python, YOLOv5|
-| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/197cb90c-4935-48a3-8db4-c8510ee70faa" width="70px;" alt=""/><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW manager | RaspberryPi, designed & made |
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/f366ff79-8cf1-4a01-91fa-e8d6f1c840bb" width="70px;" alt=""/><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW manager | RaspberryPi, designed & made |
 | <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/681ef831-baab-4465-a0e0-9947e5e34e86" width="70px;" alt=""/><br/><sub><b>안서현</b></sub></a></div> | 팀원 | HW manager | RaspberryPi, 3D modeling(123D Design), designed & made |
 | <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/9574e9ba-70b3-4658-a3cc-b98d443f67fd" width="70px;" alt=""/><br/><sub><b>김동진</b></sub></a></div> | 팀원 | SW, CV | RasberryPi, OpenCV, Python, C++ |
 | <div align="center"><a href="https://github.com/gubam"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/84618138-ad6c-4476-a1cf-be24be954dcf" width="70px;" alt=""/><br/><sub><b>조규범</b></sub></a></div> | 팀원 | UI, HW | Python, Firebase, Flutter, Android, Fusion360 |
