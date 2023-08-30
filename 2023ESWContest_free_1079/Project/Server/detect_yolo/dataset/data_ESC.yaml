@@ -1,0 +1,13 @@
+names:
+- cigarettebutt
+- drain
+nc: 2
+roboflow:
+  license: CC BY 4.0
+  project: hanium-jw2vz
+  url: https://universe.roboflow.com/hanyang-univ-kiqko/hanium-jw2vz/dataset/1
+  version: 1
+  workspace: hanyang-univ-kiqko
+test: ../test/images
+train: /content/dataset/train.txt
+val: /content/dataset/val.txt

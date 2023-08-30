@@ -43,14 +43,67 @@
 ## 
 <br/>
 📦2023ESWContest_free_1079 <br/>
+📂Project <br/>
+ ┣ 📂Arduino <br/>
+ ┃ ┣ 📜 drain_detect.ino <br/>
+ ┣ 📂Application <br/>
+ ┃ ┣ 📂 android  <br/>
+ ┃ ┃ ┣ 📂 app  <br/>
+ ┃ ┃ ┃ ┣ 📂 src  <br/>
+ ┃ ┃ ┃ ┣ 📜 google-services.json  <br/>
+ ┃ ┃ ┣ 📂 gradle  <br/>
+ ┃ ┃ ┃ ┣ 📂 wrapper  <br/>
+ ┃ ┣ 📂 assets  <br/>
+ ┃ ┣ 📂 ios  <br/>
+ ┃ ┃ ┣ 📂 Flutter  <br/>
+ ┃ ┃ ┣ 📂 Runner  <br/>
+ ┃ ┃ ┣ 📂 Runner.xcodeproj  <br/>
+ ┃ ┃ ┣ 📂 Runner.xcworkspace  <br/>
+ ┃ ┃ ┣ 📜 firebase_app_id_file.json  <br/>
+ ┃ ┣ 📂 lib  <br/>
+ ┃ ┃ ┣ 📜 firebase_options.dart  <br/>
+ ┃ ┃ ┣ 📜 ImagePage.dart  <br/>
+ ┃ ┃ ┣ 📜 infoPage.dart  <br/>
+ ┃ ┃ ┣ 📜 main.dart  <br/>
+ ┃ ┣ 📂 linux  <br/>
+ ┃ ┃ ┣ 📂 flutter  <br/>
+ ┃ ┃ ┣ 📜 main.cc  <br/>
+ ┃ ┃ ┣ 📜 my_application.cc  <br/>
+ ┃ ┃ ┣ 📜 CMakeList.txt  <br/>
+ ┃ ┣ 📂 macos  <br/>
+ ┃ ┣ 📂 test  <br/>
+ ┃ ┣ 📂 web  <br/>
+ ┃ ┃ ┣ 📂 icons  <br/>
+ ┃ ┃ ┣ 📂 splash  <br/>
+ ┃ ┃ ┣  index.html  <br/>
+ ┃ ┣ 📂 windows  <br/>
+ ┃ ┣ 📜 analysis_options.yaml  <br/>
+ ┃ ┣ 📜 pubspec.yaml  <br/>
+ ┃ ┣ 📜 README.md  <br/>
+ ┣ 📂RaspberryPi_detect <br/>
+ ┃ ┣ 📜 dc_motor_test.py <br/>
+ ┃ ┣ 📜 servo_motor_test.py <br/>
+ ┣ 📂RaspberryPi_ <br/>
+ ┣ 📂server <br/>
+ ┃ ┣ 📂wallpad <br/>
+ ┃ ┃ ┗ 📂appstore <br/>
+ ┃ ┃ ┃ ┣ 📂appstore_app <br/>
+ ┃ ┃ ┃ ┗ 📂appstore_service <br/>
+ ┃ ┣ 📂detect_yolo <br/>
+ ┃ ┃ ┗ 📂dataset <br/>
+ ┃ ┃ ┃ ┣ 📂appstore_app <br/>
+ ┃ ┃ ┃ ┗ 📂appstore_service <br/>
+ ┃ ┃ ┗ 📂result_video <br/>
+ ┃ ┃ ┗ 📜best_ESC.pt <br/>
+ ┃ ┃ ┗ 📜trained_yolov5_custom_data.ipynb <br/>
  ┗ 📜README.md
 <br><br>
 
 ## 팀 명단
 | Profile | Role | Part | Tech Stack |
 | ------- | ---- | ---- | ---------- |
-| <div align="center"><a href="github.com/yooon27"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/cf97c9f2-2891-4a58-b276-4117dc236332" width="70px;" alt=""/><br/><sub><b>신윤성</b><sub></a></div> | 팀장 | PM, SW, CV| RaspberryPi, Arduino, C, Python, YOLOv5|
-| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/0f0d2abf-4a11-4d31-bf61-b18ff8c27cea" width="70px;" alt=""/><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW manager | RaspberryPi, designed & made |
+| <div align="center"><a href="https://github.com/yooon27"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/cf97c9f2-2891-4a58-b276-4117dc236332" width="70px;" alt=""/><br/><sub><b>신윤성</b><sub></a></div> | 팀장 | PM, SW, CV| RaspberryPi, Arduino, C, Python, YOLOv5|
+| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/197cb90c-4935-48a3-8db4-c8510ee70faa" width="70px;" alt=""/><br/><sub><b>이종민</b><sub></a></div> | 팀원 | HW manager | RaspberryPi, designed & made |
 | <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/681ef831-baab-4465-a0e0-9947e5e34e86" width="70px;" alt=""/><br/><sub><b>안서현</b></sub></a></div> | 팀원 | HW manager | RaspberryPi, 3D modeling(123D Design), designed & made |
 | <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/9574e9ba-70b3-4658-a3cc-b98d443f67fd" width="70px;" alt=""/><br/><sub><b>김동진</b></sub></a></div> | 팀원 | SW, CV | RasberryPi, OpenCV, Python, C++ |
-| <div align="center"><a href=""><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/84618138-ad6c-4476-a1cf-be24be954dcf" width="70px;" alt=""/><br/><sub><b>조규범</b></sub></a></div> | 팀원 | UI, HW | Python, Firebase, Flutter, Android, Fusion360 |
+| <div align="center"><a href="https://github.com/gubam"><img src="https://github.com/yooon27/2023ESWContest_free_1079/assets/124117305/84618138-ad6c-4476-a1cf-be24be954dcf" width="70px;" alt=""/><br/><sub><b>조규범</b></sub></a></div> | 팀원 | UI, HW | Python, Firebase, Flutter, Android, Fusion360 |
