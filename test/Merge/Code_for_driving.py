@@ -108,8 +108,8 @@ while cap.isOpened():
 
     if not ret:
         break
-        
-    
+
+
     gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)  # Apply Gaussian blur

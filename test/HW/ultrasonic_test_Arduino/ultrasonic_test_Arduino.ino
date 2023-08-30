@@ -12,7 +12,7 @@ int trig_2 = 10, echo_2 = 11; //ultrasonic_2 pin
 
 long distance_1, duration_1; 
 long distance_2, duration_2;
-int count, distance_tot, distance_avg = 0; //ultrasonic mean value
+int count, print_count, distance_tot, distance_avg = 1; //ultrasonic mean value
 
 
 void setup() {
@@ -46,7 +46,7 @@ void loop() {
   distance_2=(duration_2*340/10000)/2;
      
     //a
-    if(count != 50){
+    if(count != 20){
       count += 1;
       distance_tot += (distance_center * 0.5);
       distance_tot += (distance_1 * 0.25);
@@ -54,7 +54,7 @@ void loop() {
     }
 
   else{
-    distance_avg = distance_tot/50;
+    distance_avg = distance_tot/20;
     //   if(distance_avg > 15 & distance_avg <30){
     //     //Serial.println("Motor stop and take a picture"); //모터 멈추고 카메라로 사진 찍기
     //     //Serial.print("Motor go"); //하수구 탈출 명령
@@ -62,24 +62,38 @@ void loop() {
     //     //Serial.print(distance_avg);
     //     //delay(5000); //하수구 탈출 시간
     // }
-      distance_tot = 0;
-      count = 0;
+
+      count = 1;
     }
-Serial.print(count);
-Serial.print("      ");
-//Serial.print("Distance_center = ");
-
-Serial.print(distance_center);
-//Serial.print("cm        distance_1= ");
-Serial.print("      ");
-Serial.print(distance_1);
-//Serial.print("cm       distance_2= ");
-Serial.print("      ");
-Serial.print(distance_2);
-Serial.print("      ");
-//Serial.print("cm       average= ");
-Serial.println(distance_tot/count);
 
 
-delay(50);  
+if(print_count != 20){
+  print_count += 1;
+}
+else{
+  Serial.print(count);
+  Serial.print("      ");
+  //Serial.print("Distance_center = ");
+
+  Serial.print(distance_center);
+  //Serial.print("cm        distance_1= ");
+  Serial.print("      ");
+  Serial.print(distance_1);
+  //Serial.print("cm       distance_2= ");
+  Serial.print("      ");
+  Serial.print(distance_2);
+  Serial.print("      ");
+  //Serial.print("cm       average= ");
+  Serial.println(distance_tot);
+
+
+
+
+  if (distance_tot > 15){
+    delay(10000);
+  }
+}
+
+distance_tot = 0;
+delay(150);  
 }

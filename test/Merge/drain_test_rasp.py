@@ -127,10 +127,10 @@ if __name__ == '__main__':
             line = serial.readline().decode('utf=8').rstrip()
             arr = line.split()
             
-            distance_center = int(arr[3])
-            distance_1 = int(arr[6])
-            distance_2 = int(arr[9])
-            distance_cal = int(arr[12])
+            distance_center = int(arr[1])
+            distance_1 = int(arr[2])
+            distance_2 = int(arr[3])
+            distance_cal = int(arr[4])
             count += 1
             distance_tot += distance_cal
             if count == 50:
